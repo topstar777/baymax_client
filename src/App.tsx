@@ -7,7 +7,7 @@ import "./App.css";
 
 const CHAT_PORT = "general-chat";
 const OPENAI_PORT = "ai-chat";
-const SERVER_URL = "http://192.168.9.119:5001";
+const SERVER_URL = "http://13.57.226.132:5001";
 
 const VITE_CHAT_URL = `${SERVER_URL}/${CHAT_PORT}`;
 const VITE_OPENAI_URL = `${SERVER_URL}/${OPENAI_PORT}`;

@@ -28,7 +28,7 @@ const LoginPage = ({ socket, openAiSocket }: Props) => {
   const [password, setPassword] = useState("");
   const [roomName, setRoomName] = useState("");
   const [error, setError] = useState("");
-  const baseUrl = "http://192.168.9.119:5001/api";
+  const baseUrl = "http://13.57.226.132:5001/api";
 
   const validate = () => {
     const newErrors: { email?: string; password?: string; roomName?: string } =
