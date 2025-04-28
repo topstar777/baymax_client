@@ -9,9 +9,10 @@ import { Socket } from "socket.io-client";
 interface Props {
   socket: Socket;
   openAiSocket: Socket;
+  voiceSocket: Socket;
 }
 
-const MainLayout = ({ socket, openAiSocket }: Props) => {
+const MainLayout = ({ socket, openAiSocket, voiceSocket }: Props) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   let savedUsername = localStorage.getItem("username") || "";
   let savedRoom = localStorage.getItem("room") || "";
@@ -31,6 +32,7 @@ const MainLayout = ({ socket, openAiSocket }: Props) => {
       {sidebarOpen && (
         <Sidebar
           socket={socket}
+          voiceSocket={voiceSocket}
           username={savedUsername}
           room={savedRoom}
           onClose={() => setSidebarOpen(false)}
