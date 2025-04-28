@@ -28,7 +28,7 @@ const LoginPage = ({ socket, openAiSocket }: Props) => {
   const [password, setPassword] = useState("");
   const [roomName, setRoomName] = useState("");
   const [error, setError] = useState("");
-  const baseUrl = "http://13.57.226.132:5001/api";
+  const baseUrl = "https://baymax-backend-l2rs.onrender.com";
 
   const validate = () => {
     const newErrors: { email?: string; password?: string; roomName?: string } =
@@ -49,44 +49,26 @@ const LoginPage = ({ socket, openAiSocket }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validate()) {
+      return;
+    }
+
     try {
       const loginUrl = `${baseUrl}/auth/client_login`;
       const response = await axios.post(loginUrl, {
         email,
         password,
       });
+
       if (response.status === 200) {
-        // Assuming the backend returns a token or user data
-        localStorage.setItem("token", response.data.token); // Store token (adjust based on backend response)
+        localStorage.setItem("token", response.data.token);
         setStep(2);
       } else {
         setError("Unexpected response from the server. Please try again.");
       }
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed");
-    }
-  };
-
-  const handleSubmit1 = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const signupUrl = `${baseUrl}/auth/client_register`;
-      const response = await axios.post(signupUrl, {
-        name: "test",
-        email,
-        phone: "123-456-7894",
-        linkedin: "https://www.linkedin.com/in/linkedinURL1/",
-        password,
-      });
-      if (response.status === 200) {
-        // Assuming the backend returns a token or user data
-        localStorage.setItem("token", response.data.token); // Store token (adjust based on backend response)
-        navigate("/main"); // Redirect to chat page
-      } else {
-        setError("Unexpected response from the server. Please try again.");
-      }
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Signup failed");
     }
   };
 
@@ -100,9 +82,6 @@ const LoginPage = ({ socket, openAiSocket }: Props) => {
     setError("");
 
     try {
-      const checkRoomNameUrl = `${baseUrl}/check_room_name?name=${roomName}`;
-      //const response = await axios.get(checkRoomNameUrl);
-
       // Optional: check response.data or response.status if needed
       navigate("/chat", { state: { email, roomName } });
       localStorage.setItem("username", email);
@@ -207,6 +186,23 @@ const LoginPage = ({ socket, openAiSocket }: Props) => {
               >
                 Sign In
               </Button>
+
+              <Typography
+                variant="body2"
+                sx={{
+                  mt: 2,
+                  textAlign: "center",
+                  color: darkMode ? "#ccc" : "#333",
+                }}
+              >
+                Don't have an account?{" "}
+                <a
+                  href="/signup"
+                  style={{ color: "#1976d2", textDecoration: "underline" }}
+                >
+                  Sign Up
+                </a>
+              </Typography>
             </form>
           </Paper>
         </Box>
